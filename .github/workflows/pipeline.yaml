@@ -1,0 +1,28 @@
+name: Web IT-support check style
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-support-check-style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run HTML linting
+        run: |
+          npm install -g htmlhint
+          htmlhint .
+
+      - name: Run CSS linting
+        run: |
+          npm install -g stylelint
+          stylelint "**/*.css"
+
+      - name: Run JavaScript linting
+        run: |
+          npm install -g eslint
+          eslint 
