@@ -279,7 +279,7 @@ $(document).ready(function () {
             });
         });
     });
-    
+
     // Функция для обновления медиафайла по идентификатору
     function updateMedia(mediaId, newData) {
         // Отправляем запрос на обновление медиафайла
@@ -301,5 +301,19 @@ $(document).ready(function () {
         });
     }
 
+
+    // Функция для перенаправления на страницу login.html
+    function redirectToLogin() {
+        window.location.href = 'login.html';
+    }
+
+    // Обработчик ошибки AJAX-запроса
+    $(document).ajaxError(function (event, xhr, settings, error) {
+        // Проверяем, если ошибка "Unauthorized", то перенаправляем на страницу login.html
+        if (xhr.status === 401) {
+            console.error('Unauthorized: Redirecting to login page');
+            redirectToLogin();
+        }
+    });
 });
 

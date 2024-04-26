@@ -139,6 +139,41 @@
             margin: 10px 0;
         }
 
+
+        .container {
+            padding: 20px;
+        }
+
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .media-card {
+            width: calc(30% - 20px);
+            /* Расчет ширины карточки с учетом отступов */
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .media-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container button {
+            margin-bottom: 10px;
+            width: 12rem;
+        }
+
+        .container h1 {
+            margin-bottom: 35px;
+        }
+
         /* Стили для панели с карточками */
         .page-panel {
             background-color: #f8f9fa;
@@ -159,7 +194,6 @@
         .card-body a {
             text-decoration: none;
         }
-
     </style>
 </head>
 
@@ -252,7 +286,129 @@
         </div>
     </div>
 
+    <!-- Основное содержимое страницы -->
+    <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="mt-4">Управление решениями проблем</h1>
+            <button type="button" class="btn btn-primary top" data-toggle="modal"
+                data-target="#addSolutionModal">Добавить
+                решение</button>
+        </div>
 
+        <!-- Таблица для отображения решений проблем -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Содержание</th>
+                    <th>Заявка ID</th>
+                    <th>Видео ID</th>
+                    <th>Дата создания</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="solutionTableBody">
+                <!-- Здесь будут отображаться данные о решениях проблем -->
+            </tbody>
+        </table>
+        <br>
+        <br>
+    </div>
+
+    <!-- Модальное окно для добавления решения проблемы -->
+    <div class="modal fade" id="addSolutionModal" tabindex="-1" role="dialog" aria-labelledby="addSolutionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSolutionModalLabel">Добавить решение проблемы</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSolutionForm">
+                        <div class="form-group">
+                            <label for="content">Содержание:</label>
+                            <input type="text" class="form-control" id="content" name="content" required>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label for="inquiry_id">Заявка ID:</label>
+                            <input type="text" class="form-control" id="inquiry_id" name="inquiry_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="video_id">Видео ID:</label>
+                            <input type="text" class="form-control" id="video_id" name="video_id" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="addSolutionBtn">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Модальное окно для сообщения об успешном удалении -->
+    <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSuccessModalLabel">Успешное удаление</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Данные успешно удалены из таблицы.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для редактирования записи -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Редактирование записи</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editSolutionForm">
+                        <div class="form-group">
+                            <label for="content">Содержание:</label>
+                            <input type="text" class="form-control" id="content" name="content" required>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <label for="inquiry_id">Заявка ID:</label>
+                            <input type="text" class="form-control" id="inquiry_id" name="inquiry_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="video_id">Видео ID:</label>
+                            <input type="text" class="form-control" id="video_id" name="video_id" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <footer>
@@ -267,7 +423,6 @@
     <script>
         // Функция для получения токена пользователя
         function getUserToken() {
-            console.log(localStorage.getItem('userToken'));
             return localStorage.getItem('userToken');
         }
 
@@ -302,6 +457,199 @@
                 });
             }
         });
+
+        // Функция для отображения решений проблем в таблице
+        function displaySolutions(solutionList) {
+            var solutionTableBody = $('#solutionTableBody');
+            // Очищаем таблицу от предыдущих строк
+            solutionTableBody.empty();
+            // Проверяем, является ли solutionList массивом
+            if (Array.isArray(solutionList)) {
+                // Проходимся по списку решений проблем и добавляем их в таблицу
+                solutionList.forEach(function (solution) {
+                    var row = '<tr>' +
+                        '<td>' + solution.id + '</td>' +
+                        '<td>' + solution.content + '</td>' +
+                        '<td>' + solution.inquiry_id + '</td>' +
+                        '<td>' + solution.video_id + '</td>' +
+                        '<td>' + new Date(solution.created_at).toLocaleString() + '</td>' +
+                        '<td>' +
+                        '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' + solution.id + '">Изменить</button>' +
+                        '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' + solution.id + '">Удалить</button>' +
+                        '</td>' +
+                        '</tr>';
+                    solutionTableBody.append(row);
+                });
+            } else {
+                console.error("solutionList is not an array:", solutionList);
+            }
+        }
+
+        // Отправляем GET запрос для получения решений проблем
+        $.ajax({
+            url: 'http://localhost:3000/admin/solution',
+            type: 'GET',
+            headers: {
+                "Authorization": "Bearer " + getUserToken() // Передача токена в заголовке запроса
+            },
+            success: function (response) {
+                if (Array.isArray(response)) {
+                    displaySolutions(response);
+                } else {
+                    console.error("Response is not an array:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to fetch solutions:", error);
+            }
+        });
+
+        // Обработчик клика на кнопку "Добавить решение"
+        $('#addSolutionBtn').click(function () {
+            var content = $('#content').val();
+            var inquiry_id = $('#inquiry_id').val();
+            var video_id = $('#video_id').val();
+
+            // Отправляем POST запрос для добавления решения проблемы
+            $.ajax({
+                url: 'http://localhost:3000/admin/solution',
+                type: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken(),
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify({
+                    content: content,
+                    inquiry_id: inquiry_id,
+                    video_id: video_id
+                }),
+                success: function (response) {
+                    console.log("Solution added successfully:", response);
+                    $('#addSolutionModal').modal('hide');
+                    // После успешного добавления можно обновить таблицу, если необходимо
+                    loadDataAndRefreshTable();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to add solution:", error);
+                }
+            });
+        });
+
+        // Функция для загрузки данных и обновления таблицы
+        function loadDataAndRefreshTable() {
+            // Отправляем GET запрос для получения медиафайлов
+            $.ajax({
+                url: 'http://localhost:3000/admin/solution',
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Отображаем медиафайлы в таблице
+                    displayMedia(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch media:", error);
+                }
+            });
+        }
+
+        $(document).on('click', '.delete-btn', function () {
+            var button = $(this); // Сохраняем контекст this в переменную button
+            var solutionIdToDelete = button.data('id');
+
+            $.ajax({
+                url: 'http://localhost:3000/admin/solution/' + solutionIdToDelete,
+                type: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    console.log("Solution deleted successfully:", response);
+                    button.closest('tr').remove(); // Используем сохраненный контекст button
+                    $('#deleteSuccessModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to delete solution:", error);
+                }
+            });
+        });
+
+
+        // Обработчик клика по кнопке "Редактировать"
+        $(document).on('click', '.edit-btn', function () {
+            var solutionId = $(this).data('id');
+            $('#saveChangesBtn').data('id', solutionId); // Сохраняем ID решения в кнопке сохранения изменений
+
+            // Запрос на сервер для получения данных о решении
+            $.ajax({
+                url: 'http://localhost:3000/admin/solution/' + solutionId,
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    console.log("Solution data loaded successfully:", response);
+                    // Заполняем поля формы редактирования данными о решении
+                    $('#content').val(response.content);
+                    $('#inquiry_id').val(response.inquiry_id);
+                    $('#video_id').val(response.video_id);
+
+                    $('#editModal').modal('show'); // Показываем модальное окно
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load solution data:", error);
+                }
+            });
+        });
+
+
+        // Обработчик клика по кнопке "Сохранить изменения"
+        $('#saveChangesBtn').click(function () {
+            var solutionId = $(this).data('id');
+            var content = $('#content').val(); // Получаем значение поля "Содержание"
+            var inquiryId = $('#inquiry_id').val(); // Получаем значение поля "Заявка ID"
+            var videoId = $('#video_id').val(); // Получаем значение поля "Видео ID"
+
+            // Отправляем PUT запрос для обновления данных о решении
+            $.ajax({
+                url: 'http://localhost:3000/admin/solution/' + solutionId,
+                type: 'PUT',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    content: content,
+                    inquiry_id: inquiryId,
+                    video_id: videoId
+                }),
+                success: function (response) {
+                    console.log("Solution updated successfully:", response);
+                    $('#editModal').modal('hide');
+                    // После успешного обновления можно обновить таблицу, если необходимо
+                    loadDataAndRefreshTable();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to update solution:", error);
+                }
+            });
+        });
+
+        // Функция для перенаправления на страницу login.html
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        // Обработчик ошибки AJAX-запроса
+        $(document).ajaxError(function (event, xhr, settings, error) {
+            // Проверяем, если ошибка "Unauthorized", то перенаправляем на страницу login.html
+            if (xhr.status === 401) {
+                console.error('Unauthorized: Redirecting to login page');
+                redirectToLogin();
+            }
+        });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

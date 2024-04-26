@@ -575,8 +575,6 @@
             }
         }
 
-
-
         // Отправляем GET запрос для получения пользователей
         $.ajax({
             url: 'http://localhost:3000/admin/user',
@@ -769,8 +767,6 @@
         }
 
 
-
-
         // Обработчик для открытия модального окна редактирования пользователя
         $(document).on('click', '.edit-user-btn', function () {
             // Получаем ID пользователя из атрибута data-id кнопки
@@ -799,6 +795,20 @@
                     console.error("Failed to fetch user:", error);
                 }
             });
+        });
+
+        // Функция для перенаправления на страницу login.html
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        // Обработчик ошибки AJAX-запроса
+        $(document).ajaxError(function (event, xhr, settings, error) {
+            // Проверяем, если ошибка "Unauthorized", то перенаправляем на страницу login.html
+            if (xhr.status === 401) {
+                console.error('Unauthorized: Redirecting to login page');
+                redirectToLogin();
+            }
         });
 
     </script>
