@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="images/itlogo.ico" type="image/x-icon">
     <title>IT-Поддержка</title>
-
     <!-- Подключаем Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 
         body {
             font-family: "Ubuntu", sans-serif;
@@ -52,13 +52,13 @@
         }
 
         .tile {
-            margin-left: 400px;
+            margin-left: auto;
+            margin-right: auto;
             margin-top: 8%;
             max-width: 700px;
             flex: 1;
             border: 1px solid #ddd;
             padding: 20px;
-            margin-right: 10px;
             border-radius: 10px;
             transition: background-color 0.3s ease-in-out;
             display: flex;
@@ -73,6 +73,10 @@
 
         .tile h2 {
             margin-bottom: 10px;
+        }
+
+        .tile p {
+            margin-bottom: 20px;
         }
 
         .tile form {
@@ -134,6 +138,73 @@
             border-top: 1px solid #ddd;
             margin: 10px 0;
         }
+
+        .card {
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            display: flex;
+            /* Изменение выравнивания элементов по верхнему краю */
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: space-between;
+            /* Распределение элементов равномерно по контейнеру */
+            align-items: flex-start;
+            /* Выравнивание элементов по верхнему краю */
+
+        }
+
+        .card {
+            flex-basis: calc(50% - 40px);
+            /* Определяем начальный размер элемента */
+            margin-bottom: 20px;
+            /* Добавляем отступ снизу для разделения на два ряда */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease-in-out;
+            box-sizing: border-box;
+            /* Учитываем padding и border в размере элемента */
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-basis: calc(100% - 40px);
+                /* Для мобильных устройств карточки будут занимать всю ширину */
+            }
+        }
+
+        .card:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .card-content h2 {
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 
@@ -178,33 +249,51 @@
                     <ul class="list-group">
                         <li class="list-group-item"><a href="moiZayavki.html">Мои заявки</a></li>
                     </ul>
+
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item" id="logout"><a href="#">Выйти</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Плитка "Подать заявку" -->
-    <div class="tile">
-        <form id="inquiryForm">
-            <h2>Подать заявку</h2>
-            <div class="form-group">
-                <label for="category">Категория:</label>
-                <select class="form-control" id="category" name="category" required>
-                    <!-- Опции категорий будут добавлены динамически с помощью JavaScript -->
-                </select>
+    <div class="container">
+        <div class="card" onclick="window.location.href='/ManageUsers.html'">
+            <img src="images/users.png" alt="Пользователи" class="card-icon">
+            <div class="card-content">
+                <h2>Пользователи</h2>
+                <p>Управлять пользователями</p>
             </div>
-            <div class="form-group">
-                <label for="description">Описание проблемы:</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        </div>
+        <div class="card" onclick="window.location.href='/ManageSolutions.html'">
+            <img src="images/solution.png" alt="Решения" class="card-icon">
+            <div class="card-content">
+                <h2>Решения</h2>
+                <p>Управлять решениями</p>
             </div>
-            <button type="submit" class="btn btn-primary">Отправить заявку</button>
-        </form>
+        </div>
+        <div class="card" onclick="window.location.href='/ManageMedia.html'">
+            <img src="images/media.png" alt="Медиа" class="card-icon">
+            <div class="card-content">
+                <h2>Медиа</h2>
+                <p>Управлять медиа</p>
+            </div>
+        </div>
+        <div class="card" onclick="window.location.href='/ManageInquiries.html'">
+            <img src="images/inquiries.png" alt="Запросы" class="card-icon">
+            <div class="card-content">
+                <h2>Запросы</h2>
+                <p>Управлять запросами</p>
+            </div>
+        </div>
     </div>
+
 
     <footer>
         <div class="footer-logo-big">
             <img src="/images/itlogo.svg" alt="IT-поддержка">
-            <a href="kakPodatZayavku.html">Как подать заявку?</a>
         </div>
         <hr class="footer-separator">
         <p class="footer-text">© 2024 «IT-поддержка»</p>
@@ -216,80 +305,26 @@
         function getUserToken() {
             console.log(localStorage.getItem('userToken'));
             return localStorage.getItem('userToken');
-            // return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU2Y2IxNjI2LTE2NjEtNDgxMC05Y2FhLTJlN2Y1YmViMmIyMyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzExMjk4OTI1LCJleHAiOjE3MTEzMDI1MjV9.GWfCtPGIDasOhWmZ46toaV8_HXtOVdGtlruTu6KrpbA";
         }
 
-        $(document).ready(function () {
-            // Загрузка значений категорий из API и добавление их в выпадающий список
+        $('#logout').click(function (event) {
+            // Предотвращаем стандартное поведение ссылки
+            event.preventDefault();
+
+            // Отправляем запрос на выход из аккаунта
             $.ajax({
-                url: "http://localhost:3000/inquiry/category",
-                type: "GET",
+                url: 'http://localhost:3000/auth/logout',
+                type: 'POST',
                 headers: {
                     "Authorization": "Bearer " + getUserToken()
                 },
-                success: function (data) {
-                    var categorySelect = $("#category");
-                    $.each(data, function (key, value) {
-                        // Преобразуем значение категории в русский язык
-                        var russianCategory = getCategoryName(key);
-                        categorySelect.append("<option value='" + key + "'>" + russianCategory + "</option>");
-                    });
+                success: function (response) {
+                    // Перенаправляем пользователя на страницу авторизации
+                    window.location.href = 'login.html';
                 },
                 error: function (xhr, status, error) {
-                    console.error("Failed to fetch categories:", error);
+                    console.error("Failed to logout:", error);
                 }
-            });
-
-            function getCategoryName(category) {
-                switch (category) {
-                    case "WebsiteError":
-                        return "Сбой работы страниц на сайте";
-                    case "ApplicationError":
-                        return "Сбой работы в мобильном приложении";
-                    case "Analytic":
-                        return "Создать или изменить аналитический отчет";
-                    case "WebsiteQuestion":
-                        return "Вопрос по работе сайта";
-                    case "ApplicationQuestion":
-                        return "Вопрос по работе мобильного приложения";
-                    case "NewFeature":
-                        return "Нужна новая функция";
-                    case "Other":
-                        return "Прочие вопросы";
-                    default:
-                        return category;
-                }
-            }
-
-            // Обработчик отправки формы
-            $("#inquiryForm").submit(function (event) {
-                event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-
-                // Получаем значения полей формы
-                var category = $("#category").val();
-                var description = $("#description").val();
-
-                // Отправляем запрос на создание заявки
-                $.ajax({
-                    url: "http://localhost:3000/inquiry",
-                    type: "POST",
-                    headers: {
-                        "Authorization": "Bearer " + getUserToken(),
-                        "Content-Type": "application/json"
-                    },
-                    data: JSON.stringify({
-                        "category": category,
-                        "content": description
-                    }),
-                    success: function (response) {
-                        alert("Заявка успешно создана:", response);
-                        // Здесь можно добавить дополнительную логику, например, отображение сообщения об успешном создании заявки
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Failed to create inquiry:", error);
-                        // Здесь можно добавить обработку ошибок, например, отображение сообщения об ошибке
-                    }
-                });
             });
         });
 
@@ -303,7 +338,6 @@
                 });
             }
         });
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

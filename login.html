@@ -10,13 +10,11 @@
     <!-- Подключаем Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Подключаем шрифт Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Ubuntu", sans-serif;
             margin-bottom: 60px;
         }
 
@@ -195,13 +193,11 @@
             <img src="images/itlogo.svg" alt="IT-поддержка">
         </div>
         <hr class="footer-separator">
-        <p class="footer-text">© 2023 «IT-поддержка»</p>
+        <p class="footer-text">© 2024 «IT-поддержка»</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        var token = "YOUR_USER_TOKEN_HERE";
-
         jQuery(function ($) {
             $('form').submit(function (e) {
                 e.preventDefault();
@@ -211,11 +207,13 @@
                     url: 'http://localhost:3000/auth/login',
                     data: formData,
                     success: function (response) {
-                        // Получаем токен доступа из ответа сервера
+                        // Получаем токен доступа и роль пользователя из ответа сервера
                         var accessToken = response.tokens.access_token;
+                        var userRole = response.user.role;
 
-                        // Сохраняем токен доступа в локальном хранилище
+                        // Сохраняем токен доступа и роль пользователя в локальном хранилище
                         localStorage.setItem('userToken', accessToken);
+                        localStorage.setItem('userRole', userRole);
 
                         // Перенаправляем на другую страницу
                         window.location.href = '/index.html';
@@ -228,9 +226,8 @@
             });
         });
 
-
-
     </script>
+
 
 
 

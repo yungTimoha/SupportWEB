@@ -9,13 +9,11 @@
     <!-- Подключаем Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Подключаем шрифт Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Ubuntu", sans-serif;
             margin-bottom: 60px;
         }
 
@@ -135,6 +133,11 @@
             border-top: 1px solid #ddd;
             margin: 10px 0;
         }
+
+        .container {
+            margin-top: 50px;
+            margin-bottom: 10rem;
+        }
     </style>
 </head>
 
@@ -213,7 +216,7 @@
             <a href="kakPodatZayavku.html">Как подать заявку?</a>
         </div>
         <hr class="footer-separator">
-        <p class="footer-text">© 2023 «IT-поддержка»</p>
+        <p class="footer-text">© 2024 «IT-поддержка»</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -235,60 +238,60 @@
 
             // Отправляем запрос на получение заявок пользователя
             function getUserToken() {
-            return localStorage.getItem('userToken');
-        }
+                return localStorage.getItem('userToken');
+            }
 
-        // Функция для форматирования даты
-        function formatDate(dateString) {
-            var date = new Date(dateString);
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            // Добавляем ведущие нули, если нужно
-            if (day < 10) {
-                day = "0" + day;
+            // Функция для форматирования даты
+            function formatDate(dateString) {
+                var date = new Date(dateString);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                // Добавляем ведущие нули, если нужно
+                if (day < 10) {
+                    day = "0" + day;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                return day + "." + month + "." + year + " " + hours + ":" + minutes;
             }
-            if (month < 10) {
-                month = "0" + month;
-            }
-            if (hours < 10) {
-                hours = "0" + hours;
-            }
-            if (minutes < 10) {
-                minutes = "0" + minutes;
-            }
-            return day + ":" + month + ":" + year + " " + hours + ":" + minutes;
-        }
 
-        // Отправляем запрос на получение заявок пользователя
-        $.ajax({
-            url: "http://localhost:3000/inquiry/user",
-            type: "GET",
-            headers: {
-                "Authorization": "Bearer " + getUserToken()
-            },
-            success: function(data) {
-                // Заполняем таблицу данными о заявках
-                var tableBody = $("#inquiryTableBody");
-                $.each(data, function(index, inquiry) {
-                    tableBody.append(
-                        "<tr>" +
-                        "<td>" + inquiry.id + "</td>" +
-                        "<td>" + inquiry.content + "</td>" +
-                        "<td>" + inquiry.status + "</td>" +
-                        "<td>" + getCategoryName(inquiry.category) + "</td>" +
-                        "<td>" + formatDate(inquiry.created_at) + "</td>" +
-                        "</tr>"
-                    );
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to fetch user inquiries:", error);
-                // Здесь можно добавить обработку ошибок, например, отображение сообщения об ошибке
-            }
-        });
+            // Отправляем запрос на получение заявок пользователя
+            $.ajax({
+                url: "http://localhost:3000/inquiry/user",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (data) {
+                    // Заполняем таблицу данными о заявках
+                    var tableBody = $("#inquiryTableBody");
+                    $.each(data, function (index, inquiry) {
+                        tableBody.append(
+                            "<tr>" +
+                            "<td>" + inquiry.id + "</td>" +
+                            "<td>" + inquiry.content + "</td>" +
+                            "<td>" + inquiry.status + "</td>" +
+                            "<td>" + getCategoryName(inquiry.category) + "</td>" +
+                            "<td>" + formatDate(inquiry.created_at) + "</td>" +
+                            "</tr>"
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch user inquiries:", error);
+                    // Здесь можно добавить обработку ошибок, например, отображение сообщения об ошибке
+                }
+            });
 
             // Загрузка значений категорий из API и добавление их в выпадающий список
             $.ajax({
@@ -309,25 +312,25 @@
             });
 
             function getCategoryName(category) {
-            switch (category) {
-                case "WebsiteError":
-                    return "Сбой работы страниц на сайте";
-                case "ApplicationError":
-                    return "Сбой работы в мобильном приложении";
-                case "Analytic":
-                    return "Создать или изменить аналитический отчет";
-                case "WebsiteQuestion":
-                    return "Вопрос по работе сайта";
-                case "ApplicationQuestion":
-                    return "Вопрос по работе мобильного приложения";
-                case "NewFeature":
-                    return "Нужна новая функция";
-                case "Other":
-                    return "Прочие вопросы";
-                default:
-                    return category;
+                switch (category) {
+                    case "WebsiteError":
+                        return "Сбой работы страниц на сайте";
+                    case "ApplicationError":
+                        return "Сбой работы в мобильном приложении";
+                    case "Analytic":
+                        return "Создать или изменить аналитический отчет";
+                    case "WebsiteQuestion":
+                        return "Вопрос по работе сайта";
+                    case "ApplicationQuestion":
+                        return "Вопрос по работе мобильного приложения";
+                    case "NewFeature":
+                        return "Нужна новая функция";
+                    case "Other":
+                        return "Прочие вопросы";
+                    default:
+                        return category;
+                }
             }
-        }
 
             // Обработчик отправки формы
             $("#inquiryForm").submit(function (event) {
@@ -360,6 +363,18 @@
                 });
             });
         });
+
+        $(document).ready(function () {
+            // Проверяем, является ли пользователь администратором
+            var userRole = localStorage.getItem('userRole');
+            if (userRole === 'Admin') {
+                // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    window.location.href = 'AdminPanel.html';
+                });
+            }
+        });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

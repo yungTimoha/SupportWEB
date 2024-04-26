@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="images/itlogo.ico" type="image/x-icon">
+    <title>IT-Поддержка</title>
+    <!-- Подключаем Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+        body {
+            font-family: "Ubuntu", sans-serif;
+            margin-bottom: 60px;
+        }
+
+        #sidebar,
+        #content {
+            padding: 20px;
+        }
+
+        #sidebar {
+            z-index: 0;
+        }
+
+        #content {
+            padding: 20px;
+            margin-bottom: -60px;
+        }
+
+        #sidebar {
+            background-color: #343a40;
+            color: #fff;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        #sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .tile-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .tile {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 8%;
+            max-width: 700px;
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tile:hover {
+            background-color: #f8f9fa;
+        }
+
+        .tile h2 {
+            margin-bottom: 10px;
+        }
+
+        .tile p {
+            margin-bottom: 20px;
+        }
+
+        .tile form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .tile .form-group {
+            margin-bottom: 15px;
+        }
+
+        .tile .btn-primary {
+            width: 100%;
+        }
+
+        #navbarNav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        #quickActionBtn {
+            margin-left: 20px;
+        }
+
+        .quick-action-modal {
+            margin-top: 60px;
+        }
+
+        .quick-action-modal .modal-dialog {
+            width: 250px;
+        }
+
+        .quick-action-modal .modal-content {
+            padding: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .footer-logo-big img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .footer-separator {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .media-card {
+            width: calc(30% - 20px);
+            /* Расчет ширины карточки с учетом отступов */
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .media-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container button {
+            margin-bottom: 10px;
+            width: 12rem;
+        }
+
+        .container h1 {
+            margin-bottom: 35px;
+        }
+
+        .top {
+            margin-right: 42px; /* Настройте значение отступа по вашему желанию */
+        }
+
+        /* Стили для панели с карточками */
+        .page-panel {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card-text {
+            margin-left: 10px;
+        }
+
+        .icon-img {
+            width: 30px;
+            height: 30px;
+            /* Укажите желаемый размер изображения */
+        }
+
+        .card-body a {
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Панель навигации -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="/images/itlogo.svg" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            IT-поддержка
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <a class="navbar-brand" href="#">
+                <img src="/images/user.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <button class="btn btn-light" id="quickActionBtn" data-toggle="modal" data-target="#quickActionModal">
+                <img src="/images/more.png" width="30" height="30" class="d-inline-block align-top">
+            </button>
+        </div>
+    </nav>
+
+    <!-- Модальное окно для быстродействия -->
+    <div class="modal fade" id="quickActionModal" tabindex="-1" role="dialog" aria-labelledby="quickActionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickActionModalLabel">Каталог действий</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="podatZayavku.html">Подать заявку</a></li>
+                        <li class="list-group-item"><a href="content.html">Обучающий контент</a></li>
+                    </ul>
+
+                    <h7 class="modal-h">История</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="moiZayavki.html">Мои заявки</a></li>
+                    </ul>
+
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item" id="logout"><a href="#">Выйти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Панель с карточками для быстрого переключения страниц -->
+    <div class="container page-panel">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageUsers.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/users.png" class="icon-img" alt="User Icon">
+                        <span class="card-text">Пользователи</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageSolutions.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/solution.png" class="icon-img" alt="Support Icon">
+                        <span class="card-text">Решения</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageMedia.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/media.png" class="icon-img" alt="Media Icon">
+                        <span class="card-text">Медиа</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageInquiries.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/inquiries.png" class="icon-img" alt="Inquiries Icon">
+                        <span class="card-text">Запросы</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основное содержимое страницы -->
+    <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="mt-4">Управление медиафайлами</h1>
+            <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#addMediaModal">Добавить медиафайл</button>
+        </div>
+           
+        <!-- Таблица для отображения медиафайлов -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Источник</th>
+                    <th>Тип</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="mediaTableBody">
+                <!-- Здесь будут отображаться медиафайлы -->
+            </tbody>
+        </table>
+        <br>
+        <br>
+    </div>
+
+    <!-- Модальное окно для редактирования медиафайла -->
+    <div class="modal fade" id="editMediaModal" tabindex="-1" role="dialog" aria-labelledby="editMediaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMediaModalLabel">Редактировать медиафайл</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editSrcInput">Источник</label>
+                        <input type="text" class="form-control" id="editSrcInput"
+                            placeholder="Введите ссылку на медиафайл">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTypeInput">Тип</label>
+                        <input type="text" class="form-control" id="editTypeInput" placeholder="Введите тип медиафайла">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления медиафайла -->
+    <div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="addMediaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMediaModalLabel">Добавить медиафайл</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="mediaSrc">Источник</label>
+                        <input type="text" class="form-control" id="mediaSrc" placeholder="Введите ссылку на медиафайл">
+                    </div>
+                    <div class="form-group">
+                        <label for="mediaType">Тип</label>
+                        <select class="form-control" id="mediaType">
+                            <option value="video">video</option>
+                            <option value="image">image</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="addMediaBtn">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Модальное окно для сообщения об успешном удалении -->
+    <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSuccessModalLabel">Успешное удаление</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Данные успешно удалены из таблицы.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo-big">
+            <img src="/images/itlogo.svg" alt="IT-поддержка">
+        </div>
+        <hr class="footer-separator">
+        <p class="footer-text">© 2024 «IT-поддержка»</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

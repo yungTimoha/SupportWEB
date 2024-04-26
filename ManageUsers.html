@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="images/itlogo.ico" type="image/x-icon">
+    <title>IT-Поддержка</title>
+    <!-- Подключаем Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+        body {
+            font-family: "Ubuntu", sans-serif;
+            margin-bottom: 60px;
+        }
+
+        #sidebar,
+        #content {
+            padding: 20px;
+        }
+
+        #sidebar {
+            z-index: 0;
+            /* Уменьшаем z-index для бокового меню */
+        }
+
+        #content {
+            padding: 20px;
+            margin-bottom: -60px;
+        }
+
+        #sidebar {
+            background-color: #343a40;
+            color: #fff;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        #sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .tile-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .tile {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 8%;
+            max-width: 700px;
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tile:hover {
+            background-color: #f8f9fa;
+        }
+
+        .tile h2 {
+            margin-bottom: 10px;
+        }
+
+        .tile p {
+            margin-bottom: 20px;
+        }
+
+        .tile form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .tile .form-group {
+            margin-bottom: 15px;
+        }
+
+        .tile .btn-primary {
+            width: 100%;
+        }
+
+        #navbarNav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        #quickActionBtn {
+            margin-left: 20px;
+        }
+
+        .quick-action-modal {
+            margin-top: 60px;
+        }
+
+        .quick-action-modal .modal-dialog {
+            width: 250px;
+        }
+
+        .quick-action-modal .modal-content {
+            padding: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .footer-logo-big img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .footer-separator {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+
+        .container {
+            padding: 20px;
+        }
+
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .media-card {
+            width: calc(30% - 20px);
+            /* Расчет ширины карточки с учетом отступов */
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .media-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container button {
+            margin-bottom: 10px;
+            width: 12rem;
+        }
+
+        .container h1 {
+            margin-bottom: 35px;
+        }
+
+        .top {
+            margin-right: 62px;
+        }
+
+        /* Стили для панели с карточками */
+        .page-panel {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card-text {
+            margin-left: 10px;
+        }
+
+        .icon-img {
+            width: 30px;
+            height: 30px;
+            /* Укажите желаемый размер изображения */
+        }
+
+        .card-body a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Панель навигации -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="/images/itlogo.svg" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            IT-поддержка
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <a class="navbar-brand" href="#">
+                <img src="/images/user.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <button class="btn btn-light" id="quickActionBtn" data-toggle="modal" data-target="#quickActionModal">
+                <img src="/images/more.png" width="30" height="30" class="d-inline-block align-top">
+            </button>
+        </div>
+    </nav>
+
+    <!-- Модальное окно для быстродействия -->
+    <div class="modal fade" id="quickActionModal" tabindex="-1" role="dialog" aria-labelledby="quickActionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickActionModalLabel">Каталог действий</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="podatZayavku.html">Подать заявку</a></li>
+                        <li class="list-group-item"><a href="content.html">Обучающий контент</a></li>
+                    </ul>
+
+                    <h7 class="modal-h">История</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="moiZayavki.html">Мои заявки</a></li>
+                    </ul>
+
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item" id="logout"><a href="#">Выйти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Панель с карточками для быстрого переключения страниц -->
+    <div class="container page-panel">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageUsers.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/users.png" class="icon-img" alt="User Icon">
+                        <span class="card-text">Пользователи</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageSolutions.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/solution.png" class="icon-img" alt="Support Icon">
+                        <span class="card-text">Решения</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageMedia.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/media.png" class="icon-img" alt="Media Icon">
+                        <span class="card-text">Медиа</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageInquiries.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/inquiries.png" class="icon-img" alt="Inquiries Icon">
+                        <span class="card-text">Запросы</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основное содержимое страницы -->
+    <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="mt-4">Управление пользователями</h1>
+            <!-- Добавлена кнопка для добавления нового пользователя -->
+            <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#addUserModal">Добавить
+                пользователя</button>
+        </div>
+
+        <!-- Таблица для отображения пользователей -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Возраст</th>
+                    <th>Роль</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- Здесь будут отображаться данные о пользователях -->
+            </tbody>
+        </table>
+        <br>
+        <br>
+    </div>
+
+    <!-- Модальное окно для добавления нового пользователя -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Добавить пользователя</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="userName">Имя</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="userAge">Возраст</label>
+                        <input type="text" class="form-control" id="userAge" placeholder="Введите возраст">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" class="form-control" id="userEmail" placeholder="Введите email">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">Пароль</label>
+                        <input type="password" class="form-control" id="userPassword" placeholder="Введите пароль">
+                    </div>
+                    <div class="form-group">
+                        <label for="userRole">Роль</label>
+                        <select class="form-control" id="userRole">
+                            <option value="Admin">Admin</option>
+                            <option value="Pm">Pm</option>
+                            <option value="Analyst">Analyst</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userDepartmentId">Отдел</label>
+                        <select class="form-control" id="userDepartmentId">
+                            <option value="Quality">Quality</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="addUserBtn">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для изменения данных о пользователе -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Изменить данные о пользователе</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editUserName">Имя</label>
+                        <input type="text" class="form-control" id="editUserName" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserAge">Возраст</label>
+                        <input type="text" class="form-control" id="editUserAge" placeholder="Введите возраст">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserEmail">Email</label>
+                        <input type="email" class="form-control" id="editUserEmail" placeholder="Введите email">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserPassword">Пароль</label>
+                        <input type="password" class="form-control" id="editUserPassword" placeholder="Введите пароль">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserRole">Роль</label>
+                        <select class="form-control" id="editUserRole">
+                            <option value="Admin">Admin</option>
+                            <option value="Pm">Pm</option>
+                            <option value="Analyst">Analyst</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserDepartmentId">Отдел</label>
+                        <select class="form-control" id="editUserDepartmentId">
+                            <option value="Quality">Quality</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="saveUserChangesBtn">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Модальное окно для сообщения об успешном удалении -->
+    <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSuccessModalLabel">Успешное удаление</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Данные успешно удалены из таблицы.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo-big">
+            <img src="/images/itlogo.svg" alt="IT-поддержка">
+        </div>
+        <hr class="footer-separator">
+        <p class="footer-text">© 2024 «IT-поддержка»</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // Функция для получения токена пользователя
+        function getUserToken() {
+            console.log(localStorage.getItem('userToken'));
+            return localStorage.getItem('userToken');
+        }
+
+        $('#logout').click(function (event) {
+            // Предотвращаем стандартное поведение ссылки
+            event.preventDefault();
+
+            // Отправляем запрос на выход из аккаунта
+            $.ajax({
+                url: 'http://localhost:3000/auth/logout',
+                type: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Перенаправляем пользователя на страницу авторизации
+                    window.location.href = 'login.html';
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to logout:", error);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            // Обработчик клика на ссылку "Выйти"
+            $('#logout a').click(function (event) {
+                event.preventDefault();
+
+                // Отправляем запрос на выход из аккаунта
+                $.ajax({
+                    url: 'http://localhost:3000/auth/logout',
+                    type: 'POST',
+                    headers: {
+                        "Authorization": "Bearer " + getUserToken()
+                    },
+                    success: function (response) {
+                        // Перенаправляем пользователя на страницу авторизации
+                        window.location.href = 'login.html';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Failed to logout:", error);
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            // Проверяем, является ли пользователь администратором
+            var userRole = localStorage.getItem('userRole');
+            if (userRole === 'Admin') {
+                // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    window.location.href = 'AdminPanel.html';
+                });
+            }
+        });
+        // Функция для отображения пользователей в таблице
+        function displayUsers(userList) {
+            var userTableBody = $('#userTableBody');
+            // Очищаем таблицу от предыдущих строк
+            userTableBody.empty();
+            // Проверяем, является ли userList массивом
+            if (Array.isArray(userList)) {
+                // Проходимся по списку пользователей и добавляем их в таблицу
+                userList.forEach(function (user) {
+                    var row = '<tr>' +
+                        '<td>' + user.id + '</td>' +
+                        '<td>' + (user.name || '') + '</td>' + // Имя пользователя
+                        '<td>' + user.email + '</td>' +
+                        '<td>' + (user.age || '') + '</td>' + // Возраст
+                        '<td>' + user.role + '</td>' +
+                        '<td class="text-center">' +
+                        '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' + user.id + '">Редактировать</button>' +
+                        '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' + user.id + '">Удалить</button>' +
+                        '</td>' +
+                        '</tr>';
+                    userTableBody.append(row);
+                });
+
+                // Привязываем обработчик события к кнопке "Редактировать"
+                $('.edit-btn').click(function () {
+                    var userIdToEdit = $(this).data('id');
+                    // Ваш код для обработки нажатия на кнопку "Редактировать"
+                    // Получение данных о пользователе и открытие модального окна редактирования
+                    $.ajax({
+                        url: 'http://localhost:3000/admin/user/' + userIdToEdit,
+                        type: 'GET',
+                        headers: {
+                            "Authorization": "Bearer " + getUserToken()
+                        },
+                        success: function (response) {
+                            // Заполняем поля модального окна данными о пользователе
+                            $('#editUserName').val(response.name);
+                            $('#editUserAge').val(response.age);
+                            $('#editUserEmail').val(response.email);
+                            $('#editUserPassword').val(response.password);
+                            $('#editUserRole').val(response.role);
+                            $('#editUserDepartmentId').val(response.department_id);
+                            // Устанавливаем значение userId в атрибут data-id модального окна
+                            $('#editUserModal').attr('data-id', userIdToEdit);
+                            // Открываем модальное окно
+                            $('#editUserModal').modal('show');
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Failed to fetch user:", error);
+                        }
+                    });
+                });
+            } else {
+                console.error("userList is not an array:", userList);
+            }
+        }
+
+
+
+        // Отправляем GET запрос для получения пользователей
+        $.ajax({
+            url: 'http://localhost:3000/admin/user',
+            type: 'GET',
+            headers: {
+                "Authorization": "Bearer " + getUserToken()
+            },
+            contentType: 'application/json',
+            success: function (response) {
+                if (Array.isArray(response)) {
+                    displayUsers(response);
+                } else {
+                    console.error("Response is not an array:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to fetch users:", error);
+                console.log("Response:", xhr.responseText);
+                // Здесь можно добавить код для обработки ошибки при загрузке пользователей
+            }
+        });
+
+        $(document).on('click', '.delete-btn', function () {
+            var button = $(this); // Сохраняем контекст this в переменную button
+            var userIdToDelete = button.data('id');
+
+            $.ajax({
+                url: 'http://localhost:3000/admin/user/' + userIdToDelete,
+                type: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    console.log("User deleted successfully:", response);
+                    button.closest('tr').remove(); // Используем сохраненный контекст button
+                    $('#deleteSuccessModal').modal('show');
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to delete user:", error);
+                }
+            });
+        });
+
+        // Функция для загрузки данных и обновления таблицы
+        function loadDataAndRefreshTable() {
+            // Отправляем GET запрос для получения медиафайлов
+            $.ajax({
+                url: 'http://localhost:3000/admin/user',
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Отображаем медиафайлы в таблице
+                    displayMedia(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch media:", error);
+                }
+            });
+        }
+
+        // Обработчик клика по кнопке "Добавить пользователя"
+        $('#addUserBtn').click(function () {
+            // Получаем значения полей ввода
+            var userName = $('#userName').val();
+            var userAge = $('#userAge').val();
+            var userEmail = $('#userEmail').val();
+            var userPassword = $('#userPassword').val();
+            var userRole = $('#userRole').val();
+            var userDepartmentId = $('#userDepartmentId').val();
+
+            // Отправляем POST запрос для добавления нового пользователя
+            $.ajax({
+                url: 'http://localhost:3000/admin/user',
+                type: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                data: JSON.stringify({
+                    name: userName,
+                    age: userAge,
+                    email: userEmail,
+                    password: userPassword,
+                    role: userRole,
+                    departmentId: userDepartmentId
+                }),
+                contentType: 'application/json',
+                success: function (response) {
+                    // Закрываем модальное окно
+                    $('#addUserModal').modal('hide');
+                    // Показываем модальное окно с сообщением об успешном добавлении
+                    $('#addSuccessModal').modal('show');
+                    // Обновляем таблицу с пользователями после успешного добавления
+                    if (Array.isArray(response)) {
+                        response.forEach(function (user) {
+                            displayUser(user);
+                        });
+                    } else {
+                        displayUser(response);
+                    }
+                    // Очищаем поля формы после успешной отправки
+                    $('#userName').val('');
+                    $('#userAge').val('');
+                    $('#userEmail').val('');
+                    $('#userPassword').val('');
+                    $('#userRole').val('Admin');
+                    $('#userDepartmentId').val('Quality');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to add user:", error);
+                    console.log("Response:", xhr.responseText);
+                    // Здесь можно добавить код для обработки ошибки при добавлении пользователя
+                }
+            });
+        });
+
+
+        // Обработчик для открытия модального окна редактирования пользователя
+        $(document).on('click', '.edit-user-btn', function () {
+            // Получаем ID пользователя из атрибута data-id кнопки
+            var userIdToEdit = $(this).data('id');
+            // Получаем данные о пользователе по его ID и заполняем поля модального окна
+            $.ajax({
+                url: 'http://localhost:3000/admin/user/' + userIdToEdit,
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Заполняем поля модального окна данными о пользователе
+                    $('#editUserName').val(response.name);
+                    $('#editUserAge').val(response.age);
+                    $('#editUserEmail').val(response.email);
+                    $('#editUserPassword').val(response.password);
+                    $('#editUserRole').val(response.role);
+                    $('#editUserDepartmentId').val(response.department_id);
+                    // Устанавливаем значение userId в атрибут data-id модального окна
+                    $('#editUserModal').attr('data-id', userIdToEdit);
+                    // Открываем модальное окно
+                    $('#editUserModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch user:", error);
+                }
+            });
+        });
+
+        // Обработчик для сохранения изменений в данных о пользователе
+        $('#saveUserChangesBtn').click(function () {
+            // Получаем ID пользователя из атрибута data-id модального окна
+            var userId = $('#editUserModal').attr('data-id');
+            // Получаем данные для обновления
+            var newData = {
+                name: $('#editUserName').val(),
+                age: $('#editUserAge').val(),
+                email: $('#editUserEmail').val(),
+                password: $('#editUserPassword').val(),
+                role: $('#editUserRole').val(),
+                departmentId: $('#editUserDepartmentId').val()
+            };
+            // Вызываем функцию обновления данных о пользователе
+            updateUser(userId, newData);
+            // Закрываем модальное окно
+            $('#editUserModal').modal('hide');
+        });
+
+        // Функция для обновления данных о пользователе по идентификатору
+        function updateUser(userId, newData) {
+            // Отправляем запрос на обновление данных о пользователе
+            $.ajax({
+                url: 'http://localhost:3000/admin/user/' + userId,
+                type: 'PUT',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(newData),
+                success: function (response) {
+                    console.log("User updated successfully:", response);
+                    // После успешного обновления данных о пользователе,
+                    // обновляем таблицу, чтобы отобразить новые данные
+                    loadDataAndRefreshTable();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to update user:", error);
+                }
+            });
+        }
+
+
+
+
+        // Обработчик для открытия модального окна редактирования пользователя
+        $(document).on('click', '.edit-user-btn', function () {
+            // Получаем ID пользователя из атрибута data-id кнопки
+            var userIdToEdit = $(this).data('id');
+            // Получаем данные о пользователе по его ID и заполняем поля модального окна
+            $.ajax({
+                url: 'http://localhost:3000/admin/user/' + userIdToEdit,
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Заполняем поля модального окна данными о пользователе
+                    $('#editUserName').val(response.name);
+                    $('#editUserAge').val(response.age);
+                    $('#editUserEmail').val(response.email);
+                    $('#editUserPassword').val(response.password);
+                    $('#editUserRole').val(response.role);
+                    $('#editUserDepartmentId').val(response.department_id);
+                    // Устанавливаем значение userId в атрибут data-id модального окна
+                    $('#editUserModal').attr('data-id', userIdToEdit);
+                    // Открываем модальное окно
+                    $('#editUserModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch user:", error);
+                }
+            });
+        });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
