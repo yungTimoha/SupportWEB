@@ -134,6 +134,18 @@
             border-top: 1px solid #ddd;
             margin: 10px 0;
         }
+
+        #quickActionModal .list-group-item {
+            margin: 5px;
+            /* Отступ между элементами */
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            /* Цвет фона */
+        }
+
+        .modal-dialog h7 {
+            margin-left: 10px;
+        }
     </style>
 </head>
 
@@ -178,6 +190,12 @@
                     <ul class="list-group">
                         <li class="list-group-item"><a href="moiZayavki.html">Мои заявки</a></li>
                     </ul>
+                    <h7 class="modal-h">Действия</h7>
+                    <ul class="list-group">
+                        <li class="list-group-item" id="logout"><a href="#">Выйти</a></li>
+                    </ul>
+
+
                 </div>
             </div>
         </div>
@@ -316,6 +334,29 @@
                 console.error('Unauthorized: Redirecting to login page');
                 redirectToLogin();
             }
+        });
+
+        $(document).ready(function () {
+            // Обработчик клика на элемент списка "Выйти"
+            $('#logout').click(function (event) {
+                event.preventDefault();
+
+                // Отправляем запрос на выход из аккаунта
+                $.ajax({
+                    url: 'http://localhost:3000/auth/logout',
+                    type: 'POST',
+                    headers: {
+                        "Authorization": "Bearer " + getUserToken()
+                    },
+                    success: function (response) {
+                        // Перенаправляем пользователя на страницу авторизации
+                        window.location.href = 'login.html';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Failed to logout:", error);
+                    }
+                });
+            });
         });
 
     </script>

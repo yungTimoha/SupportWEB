@@ -172,7 +172,8 @@
         }
 
         .top {
-            margin-right: 42px; /* Настройте значение отступа по вашему желанию */
+            margin-right: 42px;
+            /* Настройте значение отступа по вашему желанию */
         }
 
         /* Стили для панели с карточками */
@@ -196,6 +197,17 @@
             text-decoration: none;
         }
 
+        #quickActionModal .list-group-item {
+            margin: 5px;
+            /* Отступ между элементами */
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            /* Цвет фона */
+        }
+
+        .modal-dialog h7 {
+            margin-left: 10px;
+        }
     </style>
 </head>
 
@@ -292,9 +304,10 @@
     <div class="container">
         <div class="container d-flex justify-content-between align-items-center">
             <h1 class="mt-4">Управление медиафайлами</h1>
-            <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#addMediaModal">Добавить медиафайл</button>
+            <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#addMediaModal">Добавить
+                медиафайл</button>
         </div>
-           
+
         <!-- Таблица для отображения медиафайлов -->
         <table class="table">
             <thead>

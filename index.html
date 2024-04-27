@@ -182,6 +182,50 @@
         .modal-body p {
             text-align: center;
         }
+
+        #quickActionModal .list-group-item {
+            margin: 5px;
+            /* Отступ между элементами */
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            /* Цвет фона */
+        }
+
+        .modal-dialog h7 {
+            margin-left: 10px;
+        }
+
+        .inq {
+            min-width: 45%;
+        }
+
+        .cont {
+            min-width: 45%;
+        }
+
+        .fact {
+            min-width: 40%;
+        }
+
+        .tile-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tile.fact {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .next-fact-btn {
+            float: right;
+            margin-top: 1%;
+        }
+
+        .fact-content {
+            font-size: 18px;
+        }
+        
     </style>
 </head>
 
@@ -299,7 +343,7 @@
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" id="content">
                 <div class="tile-container">
-                    <div class="tile">
+                    <div class="tile inq">
                         <form id="inquiryForm">
                             <h2>Подать заявку</h2>
                             <div class="form-group">
@@ -317,7 +361,7 @@
                         </form>
                     </div>
 
-                    <div class="tile">
+                    <div class="tile cont">
                         <h2>Обучающий контент</h2>
                         <div class="tile-container">
                             <div class="tile">
@@ -331,6 +375,15 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tile fact">
+                        <h2>Факт дня</h2>
+                        <div class="fact-content">
+                            <!-- Здесь будет выводиться факт -->
+                        </div>
+                        <!-- <button class="btn btn-primary next-fact-btn">Следующий факт</button> -->
+                    </div>
+
                     <footer>
                         <div class="footer-logo-big">
                             <img src="/images/itlogo.svg" alt="IT-поддержка">
@@ -339,6 +392,7 @@
                         <hr class="footer-separator">
                         <p class="footer-text">© 2024 «IT-поддержка»</p>
                     </footer>
+
                 </div>
             </main>
         </div>
@@ -518,6 +572,69 @@
                 console.error('Unauthorized: Redirecting to login page');
                 redirectToLogin();
             }
+        });
+
+    </script>
+
+    <script defer>
+
+        
+        $(document).ready(function () {
+            var apiKey = 'pQuIZTTtL/FnFWzcsI78yA==UG66L5OXr8ZSAIuT';
+
+            async function loadFact() {
+                try {
+                    const response = await fetch('https://api.api-ninjas.com/v1/facts', {
+                        headers: {
+                            'X-Api-Key': apiKey // Используйте ваш API ключ здесь
+                        }
+                    });
+                    const result = await response.json();
+
+                    // Проверяем, что результат не пустой и содержит факт
+                    if (result && result.length > 0 && result[0].fact) {
+                        const fact = result[0].fact;
+
+                        // Переводим факт на русский язык
+                        const translatedFact = await translateText(fact);
+
+                        // Выводим переведенный факт
+                        $('.fact-content').text(translatedFact);
+                    } else {
+                        console.error('Error: Fact not found in response');
+                    }
+                } catch (error) {
+                    console.error('Error loading fact:', error);
+                }
+            }
+
+
+            // Функция для перевода текста
+            async function translateText(text) {
+                const langpair = 'en|ru'; // Переводим с английского на русский
+                try {
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langpair}`);
+                    const data = await response.json();
+                    return data.responseData.translatedText;
+                } catch (error) {
+                    console.error('Error translating text:', error);
+                    return text; // Возвращаем исходный текст в случае ошибки
+                }
+            }
+
+            // Загрузка факта при загрузке страницы
+            loadFact();
+
+            // Обработчик клика по кнопке "Следующий факт"
+            $('.next-fact-btn').click(function () {
+                loadFact(); // Загружаем новый факт при клике
+            });
+
+            // Обработчик клика по контейнеру "Факт дня"
+            $('.tile.fact').click(function () {
+                loadFact(); // Загружаем новый факт при клике на контейнер
+            });
+
         });
 
     </script>
