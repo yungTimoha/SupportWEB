@@ -225,7 +225,6 @@
         .fact-content {
             font-size: 18px;
         }
-        
     </style>
 </head>
 
@@ -260,7 +259,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h7 class="modal-h">Действия</h7>
+                    <h7 class="modal-h">Каталог</h7>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="podatZayavku.html">Подать заявку</a></li>
                         <li class="list-group-item"><a href="content.html">Обучающий контент</a></li>
@@ -274,7 +273,6 @@
                     <ul class="list-group">
                         <li class="list-group-item" id="logout"><a href="#">Выйти</a></li>
                     </ul>
-
 
                 </div>
             </div>
@@ -398,6 +396,33 @@
         </div>
     </div>
 
+    <!-- Модальное окно приветствия -->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="welcomeModalLabel">Добро пожаловать, <span id="welcomeUserName"></span>!
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Здесь может быть дополнительный контент для модального окна -->
+                    <!-- Например, приветственное сообщение -->
+                    <p>Уникальный номер вашей учетной записи:</p>
+                    <p id="welcomeUserId"></p> <!-- Здесь будет выводиться ID пользователя -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Модальное окно для QR-кода -->
     <div class="modal fade" id="telegramModal" tabindex="-1" role="dialog" aria-labelledby="telegramModalLabel"
         aria-hidden="true">
@@ -411,9 +436,9 @@
                 </div>
                 <div class="modal-body">
                     <!-- Вставьте изображение с QR-кодом здесь -->
-                    <img src="/images/qr.jpg" alt="Telegram QR Code" width="300" height="300">
+                    <img src="/images/qr-code.png" alt="Telegram QR Code" width="300" height="300">
                     <!-- Ссылка на телеграм бота -->
-                    <p>Сканируйте QR-код или перейдите по <a href="https://t.me/+bvxKRrGHxlphNGMy"
+                    <p>Сканируйте QR-код или перейдите по <a href="https://t.me/ITSupportVKR_Bot"
                             target="_blank">ссылке</a></p>
                 </div>
             </div>
@@ -492,7 +517,11 @@
                         "content": description
                     }),
                     success: function (response) {
-                        alert("Заявка успешно создана:", response);
+                        alert("Заявка успешно создана", response);
+
+                        // Очищаем поля формы после успешной отправки заявки
+                        $("#category").val("");
+                        $("#description").val("");
                     },
                     error: function (xhr, status, error) {
                         console.error("Failed to create inquiry:", error);
@@ -548,22 +577,47 @@
 
         });
 
-
         $(document).ready(function () {
-            // Проверяем, является ли пользователь администратором
+            // Получаем роль пользователя из localStorage
             var userRole = localStorage.getItem('userRole');
-            if (userRole === 'Admin') {
+
+            // Проверяем роль пользователя и добавляем обработчик события нажатия на элемент
+            if (userRole !== 'User' && userRole !== 'Admin') {
+                // Если роль пользователя не User и не Admin, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    // Перенаправляем пользователя на страницу employeeWindow.html
+                    window.location.href = '/employeeWindow.html';
+                });
+            } else if (userRole === 'User') {
+                // Если пользователь является пользователем, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    // Открываем модальное окно с приветствием
+                    var userName = localStorage.getItem('userName');
+                    var userId = localStorage.getItem('userId');
+                    $('#welcomeModal').modal('show');
+                    $('#welcomeUserName').text(userName); // Вставляем имя пользователя в модальное окно
+                    $('#welcomeUserId').text(userId); // Вставляем ID пользователя в модальное окно
+                });
+            } else if (userRole === 'Admin') {
                 // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
                 $('.navbar-brand img').click(function () {
+                    // Перенаправляем пользователя на страницу AdminPanel.html
                     window.location.href = 'AdminPanel.html';
                 });
             }
+        });
+
+        // Обработчик закрытия модального окна приветствия
+        $('#welcomeModal').on('hidden.bs.modal', function (e) {
+            // Перенаправляем пользователя на другую страницу после закрытия модального окна
+            window.location.href = '/index.html';
         });
 
         // Функция для перенаправления на страницу login.html
         function redirectToLogin() {
             window.location.href = 'login.html';
         }
+
 
         // Обработчик ошибки AJAX-запроса
         $(document).ajaxError(function (event, xhr, settings, error) {
@@ -578,7 +632,6 @@
 
     <script defer>
 
-        
         $(document).ready(function () {
             var apiKey = 'pQuIZTTtL/FnFWzcsI78yA==UG66L5OXr8ZSAIuT';
 
@@ -586,7 +639,7 @@
                 try {
                     const response = await fetch('https://api.api-ninjas.com/v1/facts', {
                         headers: {
-                            'X-Api-Key': apiKey // Используйте ваш API ключ здесь
+                            'X-Api-Key': apiKey
                         }
                     });
                     const result = await response.json();
@@ -608,7 +661,6 @@
                 }
             }
 
-
             // Функция для перевода текста
             async function translateText(text) {
                 const langpair = 'en|ru'; // Переводим с английского на русский
@@ -627,12 +679,12 @@
 
             // Обработчик клика по кнопке "Следующий факт"
             $('.next-fact-btn').click(function () {
-                loadFact(); // Загружаем новый факт при клике
+                loadFact();
             });
 
             // Обработчик клика по контейнеру "Факт дня"
             $('.tile.fact').click(function () {
-                loadFact(); // Загружаем новый факт при клике на контейнер
+                loadFact();
             });
 
         });

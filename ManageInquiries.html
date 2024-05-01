@@ -213,6 +213,11 @@
         .modal-dialog h7 {
             margin-left: 10px;
         }
+
+        .top {
+            margin-top: 20px;
+            margin-right: -46px;
+        }
     </style>
 </head>
 
@@ -247,7 +252,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h7 class="modal-h">Действия</h7>
+                    <h7 class="modal-h">Каталог</h7>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="podatZayavku.html">Подать заявку</a></li>
                         <li class="list-group-item"><a href="content.html">Обучающий контент</a></li>
@@ -329,9 +334,8 @@
     <div class="container">
         <div class="container d-flex justify-content-between align-items-center">
             <h1 class="mt-4">Управление пользователями</h1>
-            <!-- Добавлена кнопка для добавления нового пользователя -->
-            <!-- <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#addUserModal">Добавить
-                пользователя</button> -->
+            <!-- Добавлена кнопка для просмотра завок по отделам -->
+            <button type="button" class="btn btn-primary top" data-toggle="modal" data-target="#ShowInqByDepartament">Заявки по отделам</button>
         </div>
         <!-- Контент страницы -->
         <table class="table table-striped">
@@ -420,18 +424,6 @@
                 }
             });
         });
-
-        $(document).ready(function () {
-            // Проверяем, является ли пользователь администратором
-            var userRole = localStorage.getItem('userRole');
-            if (userRole === 'Admin') {
-                // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
-                $('.navbar-brand img').click(function () {
-                    window.location.href = 'AdminPanel.html';
-                });
-            }
-        });
-
 
         $(document).ready(function () {
             // Функция для отображения заявок в таблице
@@ -578,6 +570,42 @@
             }
         }
 
+        $(document).ready(function () {
+            // Получаем роль пользователя из localStorage
+            var userRole = localStorage.getItem('userRole');
+
+            // Проверяем роль пользователя и добавляем обработчик события нажатия на элемент
+            if (userRole !== 'User' && userRole !== 'Admin') {
+                // Если роль пользователя не User и не Admin, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    // Перенаправляем пользователя на страницу employeeWindow.html
+                    window.location.href = '/employeeWindow.html';
+                });
+            } else if (userRole === 'User') {
+                // Если пользователь является пользователем, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    // Открываем модальное окно с приветствием
+                    var userName = localStorage.getItem('userName');
+                    var userId = localStorage.getItem('userId');
+                    $('#welcomeModal').modal('show');
+                    $('#welcomeUserName').text(userName); // Вставляем имя пользователя в модальное окно
+                    $('#welcomeUserId').text(userId); // Вставляем ID пользователя в модальное окно
+                });
+            } else if (userRole === 'Admin') {
+                // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
+                $('.navbar-brand img').click(function () {
+                    // Перенаправляем пользователя на страницу AdminPanel.html
+                    window.location.href = 'AdminPanel.html';
+                });
+            }
+        });
+
+        // Обработчик закрытия модального окна приветствия
+        $('#welcomeModal').on('hidden.bs.modal', function (e) {
+            // Перенаправляем пользователя на другую страницу после закрытия модального окна
+            window.location.href = '/index.html';
+        });
+
         // Функция для перенаправления на страницу login.html
         function redirectToLogin() {
             window.location.href = 'login.html';
@@ -591,6 +619,15 @@
                 redirectToLogin();
             }
         });
+
+        $(document).ready(function () {
+    // Обработчик клика на кнопку "Заявки по отделам"
+    $('.top').click(function () {
+        // Перенаправляем пользователя на страницу employeeWindow.html
+        window.location.href = 'employeeWindow.html';
+    });
+});
+
 
     </script>
 

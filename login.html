@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
         body {
             font-family: "Ubuntu", sans-serif;
-            margin-bottom: 60px;
+                        margin-bottom: 60px;
         }
 
         #sidebar,
@@ -197,8 +198,8 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        jQuery(function ($) {
+<script>
+    jQuery(function ($) {
             $('form').submit(function (e) {
                 e.preventDefault();
                 var formData = $(this).serialize();
@@ -210,10 +211,14 @@
                         // Получаем токен доступа и роль пользователя из ответа сервера
                         var accessToken = response.tokens.access_token;
                         var userRole = response.user.role;
+                        var userId = response.user.id;
+                        var userName = response.user.name;
 
                         // Сохраняем токен доступа и роль пользователя в локальном хранилище
                         localStorage.setItem('userToken', accessToken);
                         localStorage.setItem('userRole', userRole);
+                        localStorage.setItem('userId', userId);
+                        localStorage.setItem('userName', userName);
 
                         // Перенаправляем на другую страницу
                         window.location.href = '/index.html';
@@ -225,8 +230,7 @@
                 });
             });
         });
-
-    </script>
+</script>
 
 
 

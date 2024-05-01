@@ -204,14 +204,39 @@ $(document).ready(function () {
     }
 
     $(document).ready(function () {
-        // Проверяем, является ли пользователь администратором
+        // Получаем роль пользователя из localStorage
         var userRole = localStorage.getItem('userRole');
-        if (userRole === 'Admin') {
+
+        // Проверяем роль пользователя и добавляем обработчик события нажатия на элемент
+        if (userRole !== 'User' && userRole !== 'Admin') {
+            // Если роль пользователя не User и не Admin, то добавляем обработчик клика на иконку пользователя
+            $('.navbar-brand img').click(function () {
+                // Перенаправляем пользователя на страницу employeeWindow.html
+                window.location.href = '/employeeWindow.html';
+            });
+        } else if (userRole === 'User') {
+            // Если пользователь является пользователем, то добавляем обработчик клика на иконку пользователя
+            $('.navbar-brand img').click(function () {
+                // Открываем модальное окно с приветствием
+                var userName = localStorage.getItem('userName');
+                var userId = localStorage.getItem('userId');
+                $('#welcomeModal').modal('show');
+                $('#welcomeUserName').text(userName); // Вставляем имя пользователя в модальное окно
+                $('#welcomeUserId').text(userId); // Вставляем ID пользователя в модальное окно
+            });
+        } else if (userRole === 'Admin') {
             // Если пользователь администратор, то добавляем обработчик клика на иконку пользователя
             $('.navbar-brand img').click(function () {
+                // Перенаправляем пользователя на страницу AdminPanel.html
                 window.location.href = 'AdminPanel.html';
             });
         }
+    });
+
+    // Обработчик закрытия модального окна приветствия
+    $('#welcomeModal').on('hidden.bs.modal', function (e) {
+        // Перенаправляем пользователя на другую страницу после закрытия модального окна
+        window.location.href = '/index.html';
     });
 
     // Обработчик клика по кнопке "Добавить медиафайл"

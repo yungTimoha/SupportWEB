@@ -1,3 +1,4 @@
+</html>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -11,7 +12,6 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-
 
         body {
             font-family: "Ubuntu", sans-serif;
@@ -139,71 +139,66 @@
             margin: 10px 0;
         }
 
-        .card {
-            width: 300px;
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
 
         .container {
-            display: flex;
-            /* Изменение выравнивания элементов по верхнему краю */
-            flex-wrap: wrap;
-            margin-top: 20px;
-            justify-content: space-between;
-            /* Распределение элементов равномерно по контейнеру */
-            align-items: flex-start;
-            /* Выравнивание элементов по верхнему краю */
-
+            padding: 20px;
         }
 
-        .card {
-            flex-basis: calc(50% - 40px);
-            /* Определяем начальный размер элемента */
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .media-card {
+            width: calc(30% - 20px);
             margin-bottom: 20px;
-            /* Добавляем отступ снизу для разделения на два ряда */
-            padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
-            transition: box-shadow 0.3s ease-in-out;
-            box-sizing: border-box;
-            /* Учитываем padding и border в размере элемента */
+            overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            .card {
-                flex-basis: calc(100% - 40px);
-                /* Для мобильных устройств карточки будут занимать всю ширину */
-            }
+        .media-card img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        .card:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 15px;
-        }
-
-        .card-content h2 {
+        .container button {
             margin-bottom: 10px;
+            width: 12rem;
         }
 
-        .card-content p {
-            margin-bottom: 0;
+        .container h1 {
+            margin-bottom: 20px;
+        }
+
+        .container table {
+            margin-bottom: 6%;
+        }
+
+        .top {
+            margin-right: 62px;
+        }
+
+        /* Стили для панели с карточками */
+        .page-panel {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card-text {
+            margin-left: 10px;
+        }
+
+        .icon-img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .card-body a {
+            text-decoration: none;
         }
 
         #quickActionModal .list-group-item {
@@ -216,6 +211,11 @@
 
         .modal-dialog h7 {
             margin-left: 10px;
+        }
+
+        .top {
+            margin-top: 20px;
+            margin-right: -46px;
         }
     </style>
 </head>
@@ -271,37 +271,97 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="card" onclick="window.location.href='/ManageUsers.html'">
-            <img src="images/users.png" alt="Пользователи" class="card-icon">
-            <div class="card-content">
-                <h2>Пользователи</h2>
-                <p>Управлять пользователями</p>
+    <!-- Панель с карточками для быстрого переключения страниц -->
+    <div class="container page-panel">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageUsers.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/users.png" class="icon-img" alt="User Icon">
+                        <span class="card-text">Пользователи</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card" onclick="window.location.href='/ManageSolutions.html'">
-            <img src="images/solution.png" alt="Решения" class="card-icon">
-            <div class="card-content">
-                <h2>Решения</h2>
-                <p>Управлять решениями</p>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageSolutions.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/solution.png" class="icon-img" alt="Support Icon">
+                        <span class="card-text">Решения</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card" onclick="window.location.href='/ManageMedia.html'">
-            <img src="images/media.png" alt="Медиа" class="card-icon">
-            <div class="card-content">
-                <h2>Медиа</h2>
-                <p>Управлять медиа</p>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageMedia.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/media.png" class="icon-img" alt="Media Icon">
+                        <span class="card-text">Медиа</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card" onclick="window.location.href='/ManageInquiries.html'">
-            <img src="images/inquiries.png" alt="Запросы" class="card-icon">
-            <div class="card-content">
-                <h2>Запросы</h2>
-                <p>Управлять запросами</p>
+            <div class="col-md-3">
+                <div class="card" onclick="window.location.href='ManageInquiries.html';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/inquiries.png" class="icon-img" alt="Inquiries Icon">
+                        <span class="card-text">Запросы</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Разделитель между панелями -->
+    <hr>
+
+    <!-- Панель с карточками для быстрого переключения страниц -->
+    <div class="container page-panel">
+        <div class="row">
+            <!-- Карточки второй панели -->
+            <div class="col-md-4">
+                <div class="card" data-department="quality" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/quality.png" class="icon-img" alt="Quality Icon">
+                        <span class="card-text">Отдел качества</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" data-department="technical" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/support_b.png" class="icon-img" alt="Technical Icon">
+                        <span class="card-text">Технический отдел</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" data-department="finance" style="cursor: pointer;">
+                    <div class="card-body">
+                        <img src="images/money.png" class="icon-img" alt="Finance Icon">
+                        <span class="card-text">Отдел финансов</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Таблица для отображения заявок из отдела качества -->
+    <div class="container">
+        <h2>Заявки из отдела качества</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Содержание</th>
+                    <th>Статус</th>
+                    <th>Приоритет</th>
+                    <th>Категория</th>
+                    <th>Дата создания</th>
+                </tr>
+            </thead>
+            <tbody id="qualityInquiriesTableBody">
+                <!-- Здесь будут отображаться заявки из отдела качества -->
+            </tbody>
+        </table>
+    </div>
 
     <footer>
         <div class="footer-logo-big">
@@ -339,6 +399,7 @@
                 }
             });
         });
+
 
         $(document).ready(function () {
             // Получаем роль пользователя из localStorage
@@ -389,6 +450,103 @@
                 redirectToLogin();
             }
         });
+
+        // Функция для отправки запроса на получение заявок из отдела
+        function fetchInquiries(department) {
+            $.ajax({
+                url: 'http://localhost:3000/admin/inquiry/' + department,
+                type: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + getUserToken()
+                },
+                success: function (response) {
+                    // Обрабатываем успешный ответ и отображаем заявки в таблице
+                    displayInquiries(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Failed to fetch inquiries:', error);
+                }
+            });
+        }
+
+        function displayInquiries(inquiries) {
+            var tableBody = $('#qualityInquiriesTableBody');
+            tableBody.empty(); // Очищаем содержимое таблицы перед добавлением новых заявок
+
+            // Проверяем, что данные получены и являются не пустыми
+            if (inquiries && inquiries.length > 0) {
+                inquiries.forEach(function (inquiry) {
+                    // Создаем строку таблицы для каждой заявки
+                    var row = $('<tr>');
+                    row.append($('<td>').text(inquiry.id));
+                    row.append($('<td>').text(inquiry.content));
+                    row.append($('<td>').text(inquiry.status));
+                    row.append($('<td>').text(inquiry.priority));
+                    row.append($('<td>').text(getCategoryName(inquiry.category)));
+                    row.append($('<td>').text(formatDate(inquiry.created_at)));
+                    tableBody.append(row);
+                });
+            } else {
+                // Если данных нет, выводим сообщение об отсутствии заявок
+                tableBody.append('<tr><td colspan="6">No inquiries found</td></tr>');
+            }
+        }
+
+        $(document).ready(function () {
+            // Отправляем запрос на получение заявок из отдела качества при загрузке страницы
+            fetchInquiries('quality');
+
+            // Обработчики кликов на карточках отделов
+            $('.card').click(function () {
+                var department = $(this).data('department');
+                fetchInquiries(department);
+            });
+        });
+
+        function getCategoryName(category) {
+            switch (category) {
+                case "WebsiteError":
+                    return "Сбой работы страниц на сайте";
+                case "ApplicationError":
+                    return "Сбой работы в мобильном приложении";
+                case "Analytic":
+                    return "Создать или изменить аналитический отчет";
+                case "WebsiteQuestion":
+                    return "Вопрос по работе сайта";
+                case "ApplicationQuestion":
+                    return "Вопрос по работе мобильного приложения";
+                case "NewFeature":
+                    return "Нужна новая функция";
+                case "Other":
+                    return "Прочие вопросы";
+                default:
+                    return category;
+            }
+        }
+
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            // Добавляем ведущие нули, если нужно
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            return day + "." + month + "." + year + " " + hours + ":" + minutes;
+        }
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
